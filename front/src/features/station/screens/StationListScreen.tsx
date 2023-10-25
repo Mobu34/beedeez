@@ -1,48 +1,84 @@
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
+  Icon,
   Input,
   Spacing,
   Text,
   Wrapper,
 } from '../../../components';
-import { StationCard } from '../components';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getStations, getStationsBySearch } from '../stationThunk';
+import { getStations } from '../stationThunk';
 import { setPagination } from '../stationSlice';
-// import { Screens } from '../../../navigators/screens';
-// import { useNavigation } from '@react-navigation/core';
+import { IconEnum } from '../../../components/icon/icon.enum';
+import { Color } from '../../../enums';
+import { StationCard } from '../components';
 
 const StationListScreen = () => {
   const { stations, pagination } = useAppSelector(
     state => state.stationReducer,
   );
 
-  console.log('length! = ', stations.length);
   // const { _id } = useAppSelector((state) => state.userReducer);
   const [search, setSearch] = useState<string>('');
+  const [bikeType, setBikeType] = useState<string>('');
 
   // const navigation = useNavigation();
 
   const dispatch = useAppDispatch();
 
+  const query = { pagination: 0, search, bikeType };
+
   useEffect(() => {
     // if (!_id) {
     //   navigation.navigate(Screens.Login);
     // }
-    if (pagination > 0 || !stations.length) {
-      console.log('useEFFECT');
-      dispatch(getStations(search));
+    dispatch(getStations(query));
+  }, []);
+
+  const onBikeTypePress = (type: string) => {
+    dispatch(setPagination(0));
+    if (bikeType === type) {
+      setBikeType('');
+      dispatch(getStations({ ...query, pagination: 0, bikeType: '' }));
+    } else {
+      setBikeType(type);
+      dispatch(getStations({ ...query, pagination: 0, bikeType: type }));
     }
-  }, [pagination]);
+  };
 
   return (
     <Container>
       <Wrapper justifyContent="center" alignItems="center">
         <Text.Title>Liste des stations de Velib :</Text.Title>
         <Spacing vertical={12} />
+        <TouchableOpacity onPress={() => onBikeTypePress('ebike')}>
+          <Icon icon={IconEnum.Bolt} />
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor: bikeType === 'ebike' ? Color.PRIMARY : 'white',
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onBikeTypePress('mechanical')}>
+          <Icon icon={IconEnum.Gear} />
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor:
+                bikeType === 'mechanical' ? Color.PRIMARY : 'white',
+            }}
+          />
+        </TouchableOpacity>
         <Input
           label="Recherchez une station"
           placeholder="Nom de la station"
@@ -50,7 +86,7 @@ const StationListScreen = () => {
           onChange={text => {
             dispatch(setPagination(0));
             setSearch(text);
-            dispatch(getStationsBySearch(text));
+            dispatch(getStations({ ...query, pagination: 0, search: text }));
           }}
         />
         <FlatList
@@ -59,7 +95,12 @@ const StationListScreen = () => {
           renderItem={({ item }) => <StationCard item={item} />}
           ItemSeparatorComponent={() => <Spacing vertical={4} />}
           ListFooterComponent={() => (
-            <Button onPress={() => dispatch(setPagination(pagination + 1))}>
+            <Button
+              onPress={() => {
+                console.log('PRESSED');
+                dispatch(getStations({ ...query, pagination: pagination + 1 }));
+                dispatch(setPagination(pagination + 1));
+              }}>
               Charger plus...
             </Button>
           )}

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IStationState } from './types';
-import { getStations, getStationsBySearch } from './stationThunk';
+import { getStations } from './stationThunk';
 import { Status } from '../../services/axios/enum';
 
 const initialState: IStationState = {
@@ -21,14 +21,12 @@ const stationSlice = createSlice({
     builder.addCase(
       getStations.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.stations.push(...action.payload);
-        state.status = Status.Fulfilled;
-      },
-    );
-    builder.addCase(
-      getStationsBySearch.fulfilled,
-      (state, action: PayloadAction<any>) => {
-        state.stations = action.payload;
+        const { stations, reset } = action.payload;
+        if (reset) {
+          state.stations = stations;
+        } else {
+          state.stations.push(...stations);
+        }
         state.status = Status.Fulfilled;
       },
     );

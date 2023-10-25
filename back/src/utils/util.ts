@@ -1,3 +1,5 @@
+import { BikeType } from '@/enums/bikeType.enum';
+
 /**
  * @method isEmpty
  * @param {String | Number | Object} value
@@ -20,4 +22,17 @@ export const isEmpty = (value: string | number | object): boolean => {
 
 export const skipValue = (value: number): number => {
   return value * 10;
+};
+
+export const bikeTypeFilter = (bikeType: BikeType) => {
+  switch (bikeType) {
+    case BikeType.Mechanical:
+      return {
+        'num_bikes_available_types.mechanical': { $gt: 0 },
+      };
+    case BikeType.Ebike:
+      return {
+        'num_bikes_available_types.ebike': { $gt: 0 },
+      };
+  }
 };
