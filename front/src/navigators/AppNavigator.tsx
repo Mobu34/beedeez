@@ -10,7 +10,7 @@ import { useAppSelector } from '../hooks';
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
-  const { _id } = useAppSelector(state => state.userReducer);
+  const { _id } = useAppSelector(state => state.userReducer.user);
 
   const initialRoute = _id ? Screens.Login : Screens.Station;
 

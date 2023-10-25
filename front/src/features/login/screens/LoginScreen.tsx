@@ -11,11 +11,35 @@ import { LoginMode } from '../enums';
 import { Color } from '../../../enums';
 import { signUp } from '../../user/userThunk';
 import useAppDispatch from '../../../hooks/useAppDispatch';
+import { Controller, useForm } from 'react-hook-form';
+import { IFormData } from '../types';
+import { useAppSelector } from '../../../hooks';
+import { Status } from '../../../services/axios/enum';
+
+const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
 const LoginScreen = () => {
   const [loginMode, setLoginMode] = useState(LoginMode.SIGN_UP);
 
+  const { status } = useAppSelector(state => state.userReducer);
+
   const dispatch = useAppDispatch();
+
+  const { control, handleSubmit } = useForm<IFormData>({
+    defaultValues: DEFAULT_FORM_VALUES,
+  });
+
+  const onSubmit = (data: IFormData) => {
+    if (loginMode === LoginMode.SIGN_UP) {
+      dispatch(signUp(data));
+    } else {
+      // dispatch();
+    }
+  };
+
+  if (status === Status.Rejected) {
+    alert('Oups! Something wrong happened');
+  }
 
   return (
     <Container justifyContent="center" alignItems="center">
@@ -38,14 +62,35 @@ const LoginScreen = () => {
       </StyledView>
 
       <Wrapper vertical={20}>
-        <Input label="Veuillez entrer votre email" placeholder="Email" />
+        <Controller
+          control={control}
+          name="email"
+          rules={{ required: true }}
+          render={({ field: { value, onChange } }) => (
+            <Input
+              label="Veuillez entrer votre adresse mail"
+              placeholder="Email"
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
         <Spacing vertical={8} />
-        <Input
-          label="Veuillez entrer votre mot de passe"
-          placeholder="Mot de passe"
+        <Controller
+          control={control}
+          name="password"
+          rules={{ required: true }}
+          render={({ field: { value, onChange } }) => (
+            <Input
+              label="Veuillez entrer votre mot de passe"
+              placeholder="Mot de passe"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
       </Wrapper>
-      <Button onPress={() => dispatch(signUp())}>
+      <Button onPress={handleSubmit(onSubmit)}>
         {loginMode === LoginMode.SIGN_IN ? 'Je me connecte' : "Je m'inscris"}
       </Button>
     </Container>

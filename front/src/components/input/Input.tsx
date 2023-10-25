@@ -6,12 +6,16 @@ import { Color } from '../../enums';
 import { Spacing } from '../spacing';
 import { Text } from '../text';
 
-const Input: FC<IInputProps> = ({ label, placeholder }) => {
+const Input: FC<IInputProps> = ({ label, placeholder, value, onChange }) => {
   return (
     <View>
       <Text.Regular>{label}</Text.Regular>
       <Spacing vertical={2} />
-      <StyledTextInput placeholder={placeholder} />
+      <StyledTextInput
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChange}
+      />
     </View>
   );
 };
