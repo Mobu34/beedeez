@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signUp } from './userThunk';
+import { authentication } from './userThunk';
 import { Status } from '../../services/axios/enum';
 import { IUserState } from './types';
 
@@ -14,13 +14,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(signUp.fulfilled, (state, action) => {
-      const { user, authToken } = action.payload;
+    builder.addCase(authentication.fulfilled, (state, action) => {
+      const { user, authToken } = action.payload as any;
       state.user = user;
       state.authToken = authToken;
       state.status = Status.Fulfilled;
     });
-    builder.addCase(signUp.rejected, state => {
+    builder.addCase(authentication.rejected, state => {
       state.status = Status.Rejected;
     });
   },

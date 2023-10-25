@@ -3,3 +3,7 @@ export enum Status {
   Fulfilled = 'fulfilled',
   Rejected = 'rejected',
 }
+
+export enum RequestStatus {
+  Success = 'success',
+}

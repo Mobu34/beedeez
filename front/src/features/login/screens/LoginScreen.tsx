@@ -9,12 +9,15 @@ import {
 import { styled } from 'styled-components/native';
 import { LoginMode } from '../enums';
 import { Color } from '../../../enums';
-import { signUp } from '../../user/userThunk';
+import { authentication } from '../../user/userThunk';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { Controller, useForm } from 'react-hook-form';
 import { IFormData } from '../types';
 import { useAppSelector } from '../../../hooks';
-import { Status } from '../../../services/axios/enum';
+import { RequestStatus, Status } from '../../../services/axios/enum';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../../../navigators/screens';
+import { IAuthenticationOutput } from '../../user/types';
 
 const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
@@ -25,15 +28,17 @@ const LoginScreen = () => {
 
   const dispatch = useAppDispatch();
 
+  const navigation = useNavigation();
+
   const { control, handleSubmit } = useForm<IFormData>({
     defaultValues: DEFAULT_FORM_VALUES,
   });
 
-  const onSubmit = (data: IFormData) => {
-    if (loginMode === LoginMode.SIGN_UP) {
-      dispatch(signUp(data));
-    } else {
-      // dispatch();
+  const onSubmit = async (data: IFormData) => {
+    const res = (await dispatch(authentication({ loginMode, ...data })))
+      .payload as IAuthenticationOutput;
+    if (res.status === RequestStatus.Success) {
+      navigation.navigate(Screens.Station as never);
     }
   };
 
