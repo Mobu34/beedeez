@@ -1,3 +1,4 @@
-export enum SCREENS {
-  LOGIN = 'Login',
+export enum Screens {
+  Login = 'Login',
+  Station = 'Station',
 }

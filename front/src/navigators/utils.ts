@@ -1,4 +1,4 @@
-import {createNavigationContainerRef} from '@react-navigation/native';
+import { createNavigationContainerRef } from '@react-navigation/native';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -19,7 +19,7 @@ export function goBack() {
   }
 }
 
-export function resetRoot(params = {index: 0, routes: []}) {
+export function resetRoot(params = { index: 0, routes: [] }) {
   if (navigationRef.isReady()) {
     navigationRef.resetRoot(params);
   }

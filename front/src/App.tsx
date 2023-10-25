@@ -3,8 +3,8 @@ import {
   SafeAreaProvider,
   initialWindowMetrics,
 } from 'react-native-safe-area-context';
-
-import {AppNavigator} from './navigators/AppNavigator';
+import { AppNavigator } from './navigators/AppNavigator';
+import './services/fontawesome';
 
 const App = () => {
   return (
