@@ -1,3 +1,5 @@
+import { IStatus } from '../../../types';
+
 export interface IStation {
   _id: string;
   name: string;
@@ -15,6 +17,7 @@ export interface IStation {
   numDocksAvailable: number;
 }
 
-export interface IStationState {
+export interface IStationState extends IStatus {
   stations: IStation[];
+  pagination: number;
 }

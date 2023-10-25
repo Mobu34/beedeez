@@ -2,5 +2,5 @@ export interface IInputProps {
   label: string;
   placeholder: string;
   value: string;
-  onChange: () => void;
+  onChange: (text: string) => void;
 }

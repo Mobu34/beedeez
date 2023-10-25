@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Container,
-  Input,
-  Spacing,
-  Wrapper,
-} from '../../../components';
+import { Button, Input, Spacing, Wrapper } from '../../../components';
 import { styled } from 'styled-components/native';
 import { LoginMode } from '../enums';
 import { Color } from '../../../enums';
@@ -47,7 +41,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <Container justifyContent="center" alignItems="center">
+    <Wrapper justifyContent="center" alignItems="center" flex={1}>
       <StyledView>
         <Button
           color={
@@ -66,7 +60,7 @@ const LoginScreen = () => {
         </Button>
       </StyledView>
 
-      <Wrapper vertical={20}>
+      <Wrapper marginVertical={20}>
         <Controller
           control={control}
           name="email"
@@ -98,7 +92,7 @@ const LoginScreen = () => {
       <Button onPress={handleSubmit(onSubmit)}>
         {loginMode === LoginMode.SIGN_IN ? 'Je me connecte' : "Je m'inscris"}
       </Button>
-    </Container>
+    </Wrapper>
   );
 };
 

@@ -9,3 +9,11 @@ export const postData = async <T>(route: string, body: T) => {
     console.error(error);
   }
 };
+
+export const getData = async (route: string) => {
+  try {
+    return axios.get(`${URI}${route}`);
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -9,8 +9,6 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
 
 export default Container;
 
-const StyledView = styled.View<FlexStyle>`
+const StyledView = styled.ScrollView<FlexStyle>`
   flex: 1;
-  justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems};
 `;

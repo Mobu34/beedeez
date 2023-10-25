@@ -7,9 +7,11 @@ class StationsController {
 
   public getStations = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const finAllStations: Station[] = await this.stationsService.findAllStations();
+      const filter = { name: new RegExp(req.query?.search as string, 'i') || '' };
+      const skip = parseInt(req.query?.skip as string) || 0;
+      const findAllStations: Station[] = await this.stationsService.findAllStations(filter, skip);
 
-      res.status(200).json({ data: finAllStations, message: 'findAll' });
+      res.status(200).json({ data: findAllStations, message: 'findAll' });
     } catch (error) {
       next(error);
     }

@@ -17,3 +17,7 @@ export const isEmpty = (value: string | number | object): boolean => {
     return false;
   }
 };
+
+export const skipValue = (value: number): number => {
+  return value * 10;
+};

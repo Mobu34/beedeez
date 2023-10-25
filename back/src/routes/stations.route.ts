@@ -12,7 +12,7 @@ class StationsRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get('/stations', this.stationsController.getStations);
+    this.router.get(this.path, this.stationsController.getStations);
   }
 }
 
