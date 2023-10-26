@@ -1,5 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Input, Spacing, Text, Wrapper } from '../../../components';
+import React, { useState } from 'react';
+import {
+  Button,
+  Input,
+  Spacing,
+  Text,
+  Title,
+  Wrapper,
+} from '../../../components';
 import { styled } from 'styled-components/native';
 import { LoginMode } from '../enums';
 import { Color } from '../../../enums';
@@ -10,24 +17,13 @@ import { IFormData } from '../types';
 import { useAppSelector, useAuthentication } from '../../../hooks';
 import { RequestStatus, Status } from '../../../services/axios/enum';
 import { IAuthenticationOutput } from '../../user/types';
-import { Animated, View, useWindowDimensions } from 'react-native';
 import { resetUserStatus } from '../../user/userSlice';
+import { RabbitAnimation } from '../../../animations';
 
 const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
 const LoginScreen = () => {
-  const [loginMode, setLoginMode] = useState(LoginMode.SIGN_UP);
-
-  const animatedValue = useRef(new Animated.Value(-300)).current;
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: width / 2 - 150,
-      useNativeDriver: false,
-      duration: 2500,
-    }).start();
-  }, []);
+  const [loginMode, setLoginMode] = useState(LoginMode.SignUp);
 
   const { status } = useAppSelector(state => state.userReducer);
 
@@ -55,27 +51,22 @@ const LoginScreen = () => {
 
   return (
     <Wrapper alignItems="center" flex={1}>
-      <View
-        style={{
-          marginTop: 100,
-          transform: [{ rotate: '-10deg' }],
-        }}>
-        <Text.Title color={Color.TERTIARY}>Velib Rabbit</Text.Title>
-      </View>
+      <Spacing vertical={50} />
+      <Title />
       <StyledView>
         <Button
           color={
-            loginMode === LoginMode.SIGN_IN ? Color.PRIMARY : Color.SECONDARY
+            loginMode === LoginMode.SignIn ? Color.Primary : Color.Tertiary
           }
-          onPress={() => setLoginMode(LoginMode.SIGN_IN)}>
+          onPress={() => setLoginMode(LoginMode.SignIn)}>
           Connexion
         </Button>
         <Spacing horizontal={10} />
         <Button
           color={
-            loginMode === LoginMode.SIGN_UP ? Color.PRIMARY : Color.SECONDARY
+            loginMode === LoginMode.SignUp ? Color.Primary : Color.Tertiary
           }
-          onPress={() => setLoginMode(LoginMode.SIGN_UP)}>
+          onPress={() => setLoginMode(LoginMode.SignUp)}>
           Inscription
         </Button>
       </StyledView>
@@ -115,35 +106,18 @@ const LoginScreen = () => {
           )}
         />
 
-        <View
-          style={{
-            height: 20,
-            justifyContent: 'center',
-
-            width: 'auto',
-          }}>
+        <StyledViewError>
           {status === Status.Rejected && (
             <Text.Regular color="red" textAlign="center">
               Une erreur est survenue
             </Text.Regular>
           )}
-        </View>
+        </StyledViewError>
       </Wrapper>
-      <Button onPress={handleSubmit(onSubmit)} color={Color.TERTIARY}>
-        {loginMode === LoginMode.SIGN_IN ? 'Je me connecte' : "Je m'inscris"}
+      <Button onPress={handleSubmit(onSubmit)} color={Color.Secondary}>
+        {loginMode === LoginMode.SignIn ? 'Je me connecte' : "Je m'inscris"}
       </Button>
-      <Animated.Image
-        source={{
-          uri: 'https://media.tenor.com/YNm9Vo2rAlAAAAAi/bicycles-bikes.gif',
-        }}
-        style={{
-          width: 300,
-          height: 300,
-          position: 'absolute',
-          bottom: 120,
-          right: animatedValue,
-        }}
-      />
+      <RabbitAnimation />
     </Wrapper>
   );
 };
@@ -152,4 +126,10 @@ export default LoginScreen;
 
 const StyledView = styled.View`
   flex-direction: row;
+`;
+
+const StyledViewError = styled.View`
+  height: 20px;
+  justify-content: center;
+  width: auto;
 `;

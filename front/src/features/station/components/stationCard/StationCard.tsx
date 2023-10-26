@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import { FC, useState } from 'react';
 import { styled } from 'styled-components/native';
 import { IStationCardProps, IStyledPressable } from './stationCard.d';
@@ -14,18 +13,18 @@ const StationCard: FC<IStationCardProps> = ({ item }) => {
     numDocksAvailable,
     num_bikes_available_types,
   } = item;
-  const [hoverColor, setHoverColor] = useState('black');
+  const [hoverColor, setHoverColor] = useState(Color.Black);
 
   return (
     <StyledView
       borderColor={hoverColor}
-      onHoverIn={() => setHoverColor(Color.PRIMARY)}
-      onHoverOut={() => setHoverColor('black')}>
+      onHoverIn={() => setHoverColor(Color.Primary)}
+      onHoverOut={() => setHoverColor(Color.Black)}>
       <Text.Regular textAlign="center">
         Station : <Text.Bold>{name}</Text.Bold>
       </Text.Regular>
       <Spacing vertical={8} />
-      <View style={{ flexDirection: 'row' }}>
+      <StyledViewContainer>
         <StyledViewAvailability>
           <Icon icon={IconEnum.Bicycle} size="2x" />
           <Spacing vertical={8} />
@@ -33,30 +32,30 @@ const StationCard: FC<IStationCardProps> = ({ item }) => {
             {getPlurialSentence(numBikesAvailable, 'vélo disponible')}
           </Text.Regular>
           <Spacing vertical={4} />
-          <View style={{ flexDirection: 'row' }}>
+          <StyledViewContainer>
             <Text.Regular>{num_bikes_available_types[1].ebike}</Text.Regular>
             <Spacing horizontal={1} />
-            <Icon icon={IconEnum.Bolt} color="#f0c905" />
+            <Icon icon={IconEnum.Bolt} color={Color.Warning} />
             <Spacing horizontal={8} />
             <Text.Regular>
               {num_bikes_available_types[0].mechanical}
             </Text.Regular>
             <Spacing horizontal={1} />
-            <Icon icon={IconEnum.Gear} color="#616160" />
-          </View>
+            <Icon icon={IconEnum.Gear} color={Color.Grey} />
+          </StyledViewContainer>
         </StyledViewAvailability>
         <StyledViewAvailability>
           <Icon
             icon={IconEnum.SquareParking}
             size="2x"
-            color={Color.TERTIARY}
+            color={Color.Secondary}
           />
           <Spacing vertical={4} />
           <Text.Regular textAlign="center">
             {getPlurialSentence(numDocksAvailable, 'emplacement disponible')}
           </Text.Regular>
         </StyledViewAvailability>
-      </View>
+      </StyledViewContainer>
     </StyledView>
   );
 };
@@ -70,12 +69,15 @@ const StyledView = styled.Pressable<IStyledPressable>`
   padding: 20px;
   width: 400px;
   margin-horizontal: 4px;
-  background-color: white;
+  background-color: ${Color.White};
+`;
+
+const StyledViewContainer = styled.View`
+  flex-direction: row;
 `;
 
 const StyledViewAvailability = styled.View`
   flex: 1;
-
   align-items: center;
   padding: 6px;
 `;

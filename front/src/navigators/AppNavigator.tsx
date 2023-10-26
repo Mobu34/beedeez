@@ -5,19 +5,12 @@ import { navigationRef } from './utils';
 import { Screens } from './screens';
 import { LoginScreen } from '../features/login/screens';
 import { StationListScreen } from '../features/station/screens';
-import { useAppSelector } from '../hooks';
 
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
-  const { _id } = useAppSelector(state => state.userReducer.user);
-
-  const initialRoute = _id ? Screens.Login : Screens.Station;
-
   return (
-    <Stack.Navigator
-      initialRouteName={initialRoute}
-      screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={Screens.Login} component={LoginScreen} />
       <Stack.Screen name={Screens.Station} component={StationListScreen} />
     </Stack.Navigator>

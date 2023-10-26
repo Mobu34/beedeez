@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authentication } from './userThunk';
 import { Status } from '../../services/axios/enum';
-import { IUserState } from './types';
+import { IAuthenticationOutput, IUserState } from './types';
 import { disconnectionAction } from '../../actions/disconnection';
 
 const initialState: IUserState = {
@@ -19,12 +19,15 @@ const userSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(authentication.fulfilled, (state, action) => {
-      const { user, authToken } = action.payload as any;
-      state.user = user;
-      state.authToken = authToken;
-      state.status = Status.Fulfilled;
-    });
+    builder.addCase(
+      authentication.fulfilled,
+      (state, action: PayloadAction<IAuthenticationOutput>) => {
+        const { user, authToken } = action.payload;
+        state.user = user;
+        state.authToken = authToken;
+        state.status = Status.Fulfilled;
+      },
+    );
     builder.addCase(authentication.rejected, state => {
       state.status = Status.Rejected;
     });

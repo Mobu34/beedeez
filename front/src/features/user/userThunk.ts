@@ -7,19 +7,17 @@ import { LoginMode } from '../login/enums';
 import { RequestStatus } from '../../services/axios/enum';
 
 export const authentication = createAsyncThunk<
-  Promise<IAuthenticationOutput | void>,
+  IAuthenticationOutput,
   IAuthenticationInput,
   { state: TRootState }
->('user/authentication', async data => {
-  const route = data.loginMode === LoginMode.SIGN_UP ? 'signup' : 'login';
-  const body = { email: data.email, password: data.password };
+>('user/authentication', async dataInput => {
+  const route = dataInput.loginMode === LoginMode.SignUp ? 'signup' : 'login';
+  const body = { email: dataInput.email, password: dataInput.password };
   const res = await postData<IFormData>(route, body);
-  if (res?.status === 201 || res?.status === 200) {
-    const { data, authToken } = res.data;
-    return {
-      user: data,
-      authToken,
-      status: RequestStatus.Success,
-    };
-  }
+  const { data, authToken } = res?.data;
+  return {
+    user: data,
+    authToken,
+    status: RequestStatus.Success,
+  };
 });

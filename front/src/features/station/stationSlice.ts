@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IStationState } from './types';
+import { IGetStationsOutput, IStationState } from './types';
 import { getStations } from './stationThunk';
 import { Status } from '../../services/axios/enum';
 import { disconnectionAction } from '../../actions/disconnection';
@@ -21,7 +21,7 @@ const stationSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(
       getStations.fulfilled,
-      (state, action: PayloadAction<any>) => {
+      (state, action: PayloadAction<IGetStationsOutput>) => {
         const { stations, reset } = action.payload;
         if (reset) {
           state.stations = stations;

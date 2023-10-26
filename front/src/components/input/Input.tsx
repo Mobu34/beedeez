@@ -23,7 +23,7 @@ const Input: FC<IInputProps> = ({ label, placeholder, value, onChange }) => {
 export default Input;
 
 const StyledTextInput = styled.TextInput`
-  background-color: ${Color.GREY};
+  background-color: ${Color.Input};
   padding: 8px;
   border-radius: 8px;
 `;

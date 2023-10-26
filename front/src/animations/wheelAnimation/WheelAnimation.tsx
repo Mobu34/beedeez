@@ -4,6 +4,7 @@ import { Animated, StyleSheet, useWindowDimensions } from 'react-native';
 
 const SPIN_DURATION = 1000;
 const MOVE_DURATION = 3000;
+const INPUT_RANGE = [0, 1];
 
 const WheelAnimation = () => {
   const wheelAnimationSpin1 = useRef(new Animated.Value(0)).current;
@@ -96,19 +97,19 @@ const WheelAnimation = () => {
   }, []);
 
   const rotating1 = wheelAnimationSpin1.interpolate({
-    inputRange: [0, 1],
+    inputRange: INPUT_RANGE,
     outputRange: ['0deg', '360deg'],
   });
   const rotating2 = wheelAnimationSpin1.interpolate({
-    inputRange: [0, 1],
+    inputRange: INPUT_RANGE,
     outputRange: ['45deg', '405deg'],
   });
   const rotating3 = wheelAnimationSpin1.interpolate({
-    inputRange: [0, 1],
+    inputRange: INPUT_RANGE,
     outputRange: ['90deg', '450deg'],
   });
   const rotating4 = wheelAnimationSpin1.interpolate({
-    inputRange: [0, 1],
+    inputRange: INPUT_RANGE,
     outputRange: ['135deg', '495deg'],
   });
 
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: Color.TERTIARY,
+    borderColor: Color.Secondary,
     position: 'absolute',
   },
   spoke: {

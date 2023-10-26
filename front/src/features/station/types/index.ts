@@ -21,3 +21,14 @@ export interface IStationState extends IStatus {
   stations: IStation[];
   pagination: number;
 }
+
+export interface IGetStationsInput {
+  pagination: number;
+  search?: string;
+  bikeType?: string;
+}
+
+export interface IGetStationsOutput {
+  stations: IStation[];
+  reset: boolean;
+}

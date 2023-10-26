@@ -6,17 +6,17 @@ import { Text } from '../text';
 
 const Button: FC<IButtonProps> = ({
   children,
-  color = Color.PRIMARY,
+  color = Color.Primary,
   onPress,
 }) => {
   let textColor;
   switch (color) {
-    case Color.PRIMARY:
-    case Color.TERTIARY:
-      textColor = 'white';
+    case Color.Primary:
+    case Color.Secondary:
+      textColor = Color.White;
       break;
-    case Color.SECONDARY:
-      textColor = 'black';
+    case Color.Tertiary:
+      textColor = Color.Black;
       break;
   }
 

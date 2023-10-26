@@ -1,4 +1,4 @@
-import { FlexStyle, View } from 'react-native';
+import { FlexStyle } from 'react-native';
 import React, { FC, useState } from 'react';
 import { styled } from 'styled-components/native';
 import { IContainerProps } from './container.d';
@@ -8,6 +8,7 @@ import { IconEnum } from '../icon/icon.enum';
 import { Icon } from '../icon';
 import { Text } from '../text';
 import { Color } from '../../enums';
+import { Title } from '../title';
 
 const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
   const dispatch = useAppDispatch();
@@ -17,14 +18,7 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
   return (
     <StyledView {...styleProps}>
       <StyledViewHeader>
-        <View
-          style={{
-            transform: [{ rotate: '-10deg' }],
-          }}>
-          <Text.Title fontSize={32} color={Color.TERTIARY}>
-            Velib Rabbit
-          </Text.Title>
-        </View>
+        <Title fontSize={32} />
         <StyledPressable onHoverIn={() => setIsMenuOpen(true)}>
           <Icon icon={IconEnum.Bars} />
         </StyledPressable>
@@ -32,7 +26,7 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
           <StyledPressableMenu
             onPress={() => dispatch(disconnectionAction())}
             onHoverOut={() => setIsMenuOpen(false)}>
-            <Text.Regular color={Color.TERTIARY}>Se déconnecter</Text.Regular>
+            <Text.Regular color={Color.Secondary}>Se déconnecter</Text.Regular>
           </StyledPressableMenu>
         )}
       </StyledViewHeader>

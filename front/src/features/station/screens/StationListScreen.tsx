@@ -1,14 +1,9 @@
-import {
-  FlatList,
-  TouchableOpacity,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { FlatList, useWindowDimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import {
   Button,
+  Checkbox,
   Container,
-  Icon,
   Input,
   Spacing,
   Text,
@@ -26,6 +21,7 @@ import { Color } from '../../../enums';
 import { StationCard } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { WheelAnimation } from '../../../animations';
+import { styled } from 'styled-components/native';
 
 const StationListScreen = () => {
   const { stations, pagination } = useAppSelector(
@@ -71,40 +67,21 @@ const StationListScreen = () => {
       <Wrapper justifyContent="center" alignItems="center">
         <Text.Bold fontSize={24}>Liste des stations de Velib :</Text.Bold>
         <Spacing vertical={12} />
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity
+        <StyledViewCheckbox>
+          <Checkbox
             onPress={() => onBikeTypePress('ebike')}
-            style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon icon={IconEnum.Bolt} color="#f0c905" />
-            <Spacing horizontal={2} />
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderWidth: 1,
-                borderRadius: 5,
-                backgroundColor: bikeType === 'ebike' ? Color.PRIMARY : 'white',
-              }}
-            />
-          </TouchableOpacity>
+            icon={IconEnum.Bolt}
+            iconColor={Color.Warning}
+            color={bikeType === 'ebike' ? Color.Primary : Color.White}
+          />
           <Spacing horizontal={10} />
-          <TouchableOpacity
+          <Checkbox
             onPress={() => onBikeTypePress('mechanical')}
-            style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon icon={IconEnum.Gear} color="#616160" />
-            <Spacing horizontal={2} />
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderWidth: 1,
-                borderRadius: 5,
-                backgroundColor:
-                  bikeType === 'mechanical' ? Color.PRIMARY : 'white',
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+            icon={IconEnum.Gear}
+            iconColor={Color.Grey}
+            color={bikeType === 'mechanical' ? Color.Primary : Color.White}
+          />
+        </StyledViewCheckbox>
         <Spacing vertical={12} />
         <Input
           label="Recherchez une station"
@@ -127,7 +104,7 @@ const StationListScreen = () => {
           ListFooterComponent={() => (
             <>
               <Spacing vertical={12} />
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <StyledViewButton>
                 <Button
                   onPress={() => {
                     dispatch(
@@ -137,7 +114,7 @@ const StationListScreen = () => {
                   }}>
                   Charger plus...
                 </Button>
-              </View>
+              </StyledViewButton>
               <Spacing vertical={16} />
             </>
           )}
@@ -149,3 +126,12 @@ const StationListScreen = () => {
 };
 
 export default StationListScreen;
+
+const StyledViewCheckbox = styled.View`
+  flex-direction: row;
+`;
+
+const StyledViewButton = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;

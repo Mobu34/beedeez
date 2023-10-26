@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TRootState } from '../../store';
 import { getData } from '../../services/axios';
+import { IGetStationsInput, IGetStationsOutput } from './types';
 
 export const getStations = createAsyncThunk<
-  any,
-  { search?: string; pagination: number; bikeType?: string },
+  IGetStationsOutput,
+  IGetStationsInput,
   { state: TRootState }
 >('station/getStations', async filters => {
   let route = `stations?skip=${filters.pagination.toString()}`;

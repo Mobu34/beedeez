@@ -1,9 +1,10 @@
 import { TextStyle } from 'react-native';
 import { styled } from 'styled-components/native';
+import { Color } from '../../enums';
 
 const Regular = styled.Text<TextStyle>`
   text-align: ${({ textAlign }) => textAlign};
-  color: ${({ color = 'black' as any }) => color};
+  color: ${({ color = Color.Black as any }) => color};
   font-family: Alegreya Sans;
   font-weight: 400;
 `;
