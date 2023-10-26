@@ -21,9 +21,9 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
           style={{
             transform: [{ rotate: '-10deg' }],
           }}>
-          <Text.Bold fontSize={32} color={Color.TERTIARY}>
+          <Text.Title fontSize={32} color={Color.TERTIARY}>
             Velib Rabbit
-          </Text.Bold>
+          </Text.Title>
         </View>
         <StyledPressable onHoverIn={() => setIsMenuOpen(true)}>
           <Icon icon={IconEnum.Bars} />

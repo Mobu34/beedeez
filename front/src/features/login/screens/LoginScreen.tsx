@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Input, Spacing, Text, Wrapper } from '../../../components';
 import { styled } from 'styled-components/native';
 import { LoginMode } from '../enums';
@@ -20,11 +20,13 @@ const LoginScreen = () => {
   const animatedValue = useRef(new Animated.Value(-300)).current;
   const { width } = useWindowDimensions();
 
-  Animated.timing(animatedValue, {
-    toValue: width / 2 - 150,
-    useNativeDriver: false,
-    duration: 2500,
-  }).start();
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: width / 2 - 150,
+      useNativeDriver: false,
+      duration: 2500,
+    }).start();
+  }, []);
 
   const { status } = useAppSelector(state => state.userReducer);
 
@@ -49,11 +51,10 @@ const LoginScreen = () => {
   }
 
   return (
-    <Wrapper justifyContent="center" alignItems="center" flex={1}>
+    <Wrapper alignItems="center" flex={1}>
       <View
         style={{
-          position: 'absolute',
-          top: 150,
+          marginTop: 100,
           transform: [{ rotate: '-10deg' }],
         }}>
         <Text.Title color={Color.TERTIARY}>Velib Rabbit</Text.Title>
