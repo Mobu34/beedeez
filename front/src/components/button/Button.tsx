@@ -9,9 +9,20 @@ const Button: FC<IButtonProps> = ({
   color = Color.PRIMARY,
   onPress,
 }) => {
+  let textColor;
+  switch (color) {
+    case Color.PRIMARY:
+    case Color.TERTIARY:
+      textColor = 'white';
+      break;
+    case Color.SECONDARY:
+      textColor = 'black';
+      break;
+  }
+
   return (
     <StyledTouchableOpacity color={color} onPress={onPress}>
-      <Text.Regular>{children}</Text.Regular>
+      <Text.Regular color={textColor}>{children}</Text.Regular>
     </StyledTouchableOpacity>
   );
 };
@@ -19,7 +30,6 @@ const Button: FC<IButtonProps> = ({
 export default Button;
 
 const StyledTouchableOpacity = styled.TouchableOpacity<IStyledTouchableOpacityProps>`
-  border-width: 1px;
   border-radius: 8px;
   padding-vertical: 8px;
   padding-horizontal: 16px;

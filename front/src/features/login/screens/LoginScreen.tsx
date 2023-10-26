@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Input, Spacing, Wrapper } from '../../../components';
+import React, { useRef, useState } from 'react';
+import { Button, Input, Spacing, Text, Wrapper } from '../../../components';
 import { styled } from 'styled-components/native';
 import { LoginMode } from '../enums';
 import { Color } from '../../../enums';
@@ -10,11 +10,21 @@ import { IFormData } from '../types';
 import { useAppSelector, useAuthentication } from '../../../hooks';
 import { RequestStatus, Status } from '../../../services/axios/enum';
 import { IAuthenticationOutput } from '../../user/types';
+import { Animated, View, useWindowDimensions } from 'react-native';
 
 const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
 const LoginScreen = () => {
   const [loginMode, setLoginMode] = useState(LoginMode.SIGN_UP);
+
+  const animatedValue = useRef(new Animated.Value(-300)).current;
+  const { width } = useWindowDimensions();
+
+  Animated.timing(animatedValue, {
+    toValue: width / 2 - 150,
+    useNativeDriver: false,
+    duration: 2500,
+  }).start();
 
   const { status } = useAppSelector(state => state.userReducer);
 
@@ -40,6 +50,14 @@ const LoginScreen = () => {
 
   return (
     <Wrapper justifyContent="center" alignItems="center" flex={1}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 150,
+          transform: [{ rotate: '-10deg' }],
+        }}>
+        <Text.Title color={Color.TERTIARY}>Velib Rabbit</Text.Title>
+      </View>
       <StyledView>
         <Button
           color={
@@ -87,9 +105,21 @@ const LoginScreen = () => {
           )}
         />
       </Wrapper>
-      <Button onPress={handleSubmit(onSubmit)}>
+      <Button onPress={handleSubmit(onSubmit)} color={Color.TERTIARY}>
         {loginMode === LoginMode.SIGN_IN ? 'Je me connecte' : "Je m'inscris"}
       </Button>
+      <Animated.Image
+        source={{
+          uri: 'https://media.tenor.com/YNm9Vo2rAlAAAAAi/bicycles-bikes.gif',
+        }}
+        style={{
+          width: 300,
+          height: 300,
+          position: 'absolute',
+          bottom: 80,
+          right: animatedValue,
+        }}
+      />
     </Wrapper>
   );
 };

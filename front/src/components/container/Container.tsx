@@ -1,4 +1,4 @@
-import { FlexStyle } from 'react-native';
+import { FlexStyle, View } from 'react-native';
 import React, { FC, useState } from 'react';
 import { styled } from 'styled-components/native';
 import { IContainerProps } from './container.d';
@@ -7,6 +7,7 @@ import { disconnectionAction } from '../../actions/disconnection';
 import { IconEnum } from '../icon/icon.enum';
 import { Icon } from '../icon';
 import { Text } from '../text';
+import { Color } from '../../enums';
 
 const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,14 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
   return (
     <StyledView {...styleProps}>
       <StyledViewHeader>
+        <View
+          style={{
+            transform: [{ rotate: '-10deg' }],
+          }}>
+          <Text.Bold fontSize={32} color={Color.TERTIARY}>
+            Velib Rabbit
+          </Text.Bold>
+        </View>
         <StyledPressable onHoverIn={() => setIsMenuOpen(true)}>
           <Icon icon={IconEnum.Bars} />
         </StyledPressable>
@@ -23,7 +32,7 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
           <StyledPressableMenu
             onPress={() => dispatch(disconnectionAction())}
             onHoverOut={() => setIsMenuOpen(false)}>
-            <Text.Regular>Se déconnecter</Text.Regular>
+            <Text.Regular color={Color.TERTIARY}>Se déconnecter</Text.Regular>
           </StyledPressableMenu>
         )}
       </StyledViewHeader>
@@ -39,7 +48,7 @@ const StyledView = styled.ScrollView<FlexStyle>`
 `;
 
 const StyledViewHeader = styled.View`
-  height: 60px;
+  height: 65px;
   justify-content: center;
   shadow-color: #000000;
   shadow-offset: {
@@ -49,6 +58,7 @@ const StyledViewHeader = styled.View`
   shadow-opacity: 0.25px;
   shadow-radius: 3.84px;
   margin-bottom: 20px;
+  align-items: center;
 `;
 
 const StyledPressable = styled.Pressable`
@@ -59,9 +69,16 @@ const StyledPressable = styled.Pressable`
 const StyledPressableMenu = styled.Pressable`
   position: absolute;
   right: 40px;
-  top: 40px;
-  border-width: 1px;
-  padding: 5px;
+  top: 45px;
+  padding-vertical: 6px;
+  padding-horizontal: 12px;
   border-radius: 5px;
-  background-color: white;
+  background-color: #f2f2f2;
+  shadow-color: #0966b9;
+  shadow-offset: {
+    width: 0;
+    height: 2px;
+  }
+  shadow-opacity: 1px;
+  shadow-radius: 3.84px;
 `;

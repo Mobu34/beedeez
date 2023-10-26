@@ -4,4 +4,5 @@ import { IconEnum } from './icon.enum';
 export interface IIconProps {
   icon: IconEnum;
   size?: SizeProp;
+  color?: string;
 }
