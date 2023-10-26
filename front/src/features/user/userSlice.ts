@@ -13,7 +13,11 @@ const initialState: IUserState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    resetUserStatus: state => {
+      state.status = Status.Pending;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(authentication.fulfilled, (state, action) => {
       const { user, authToken } = action.payload as any;
@@ -29,5 +33,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const { resetUserStatus } = userSlice.actions;
 
 export default userSlice.reducer;

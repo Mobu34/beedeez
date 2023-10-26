@@ -11,6 +11,7 @@ import { useAppSelector, useAuthentication } from '../../../hooks';
 import { RequestStatus, Status } from '../../../services/axios/enum';
 import { IAuthenticationOutput } from '../../user/types';
 import { Animated, View, useWindowDimensions } from 'react-native';
+import { resetUserStatus } from '../../user/userSlice';
 
 const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
@@ -41,14 +42,16 @@ const LoginScreen = () => {
   const onSubmit = async (data: IFormData) => {
     const res = (await dispatch(authentication({ loginMode, ...data })))
       .payload as IAuthenticationOutput;
-    if (res.status === RequestStatus.Success) {
+    if (res?.status === RequestStatus.Success) {
       reset();
     }
   };
 
-  if (status === Status.Rejected) {
-    alert('Oups! Something wrong happened');
-  }
+  const resetStatus = () => {
+    if (status === Status.Rejected) {
+      dispatch(resetUserStatus());
+    }
+  };
 
   return (
     <Wrapper alignItems="center" flex={1}>
@@ -87,7 +90,10 @@ const LoginScreen = () => {
               label="Veuillez entrer votre adresse mail"
               placeholder="Email"
               value={value}
-              onChange={onChange}
+              onChange={text => {
+                onChange(text);
+                resetStatus();
+              }}
             />
           )}
         />
@@ -101,10 +107,27 @@ const LoginScreen = () => {
               label="Veuillez entrer votre mot de passe"
               placeholder="Mot de passe"
               value={value}
-              onChange={onChange}
+              onChange={text => {
+                onChange(text);
+                resetStatus();
+              }}
             />
           )}
         />
+
+        <View
+          style={{
+            height: 20,
+            justifyContent: 'center',
+
+            width: 'auto',
+          }}>
+          {status === Status.Rejected && (
+            <Text.Regular color="red" textAlign="center">
+              Une erreur est survenue
+            </Text.Regular>
+          )}
+        </View>
       </Wrapper>
       <Button onPress={handleSubmit(onSubmit)} color={Color.TERTIARY}>
         {loginMode === LoginMode.SIGN_IN ? 'Je me connecte' : "Je m'inscris"}
@@ -117,7 +140,7 @@ const LoginScreen = () => {
           width: 300,
           height: 300,
           position: 'absolute',
-          bottom: 150,
+          bottom: 120,
           right: animatedValue,
         }}
       />
