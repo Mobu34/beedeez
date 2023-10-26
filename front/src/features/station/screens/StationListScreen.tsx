@@ -1,12 +1,10 @@
 import {
-  Animated,
   FlatList,
   TouchableOpacity,
   View,
   useWindowDimensions,
-  // useWindowDimensions,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -27,6 +25,7 @@ import { IconEnum } from '../../../components/icon/icon.enum';
 import { Color } from '../../../enums';
 import { StationCard } from '../components';
 import { useNavigation } from '@react-navigation/native';
+import { WheelAnimation } from '../../../animations';
 
 const StationListScreen = () => {
   const { stations, pagination } = useAppSelector(
@@ -36,67 +35,11 @@ const StationListScreen = () => {
   const [search, setSearch] = useState<string>('');
   const [bikeType, setBikeType] = useState<string>('');
 
-  const { width } = useWindowDimensions();
-
-  const wheelAnimationTop = useRef(new Animated.Value(-240)).current;
-  // const [wheelAnimationLeft, setWheelAnimationLeft] = useState(0);
-  const wheelAnimationLeft = useRef(new Animated.Value(0)).current;
-  const wheelAnimationSpin = useRef(new Animated.Value(0)).current;
-
-  // Animated.loop(
-
-  const spin = () => {
-    console.log('spin');
-    wheelAnimationSpin.setValue(0);
-    // Animated.sequence([
-    // Animated.parallel([
-    //   Animated.timing(wheelAnimationTop, {
-    //     toValue: height / 2,
-    //     useNativeDriver: true,
-    //     duration: 2000,
-    //   }),
-    //   Animated.timing(wheelAnimationLeft, {
-    //     toValue: width / 4,
-    //     useNativeDriver: true,
-    //     duration: 2000,
-    //     delay: 1000,
-    //   }),
-
-    // ]).start(() => spin());
-    Animated.timing(wheelAnimationSpin, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start(() => spin());
-  };
-
-  useEffect(() => {
-    spin();
-  }, []);
-
-  // const rotating = wheelAnimationSpin.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: ['0deg', '360deg'],
-  // });
-
-  // ).start(({ finished }) => {
-  //   console.log({ finished });
-  //   // if (finished) {
-  //   // const randomTop = Math.floor(Math.random() * 2);
-  //   wheelAnimationTop.setValue(-120);
-  //   // setWheelAnimationLeft(Math.floor(Math.random() * width));
-  //   const rand = Math.floor(Math.random() * width);
-  //   console.log(rand);
-  //   wheelAnimationLeft.setValue(rand);
-  //   // }
-  // });
-
-  console.log(wheelAnimationLeft);
-
-  console.log(wheelAnimationTop);
-
   const navigation = useNavigation();
 
   const dispatch = useAppDispatch();
+
+  const { width } = useWindowDimensions();
 
   useAuthentication();
 
@@ -124,52 +67,8 @@ const StationListScreen = () => {
 
   return (
     <Container>
+      <WheelAnimation />
       <Wrapper justifyContent="center" alignItems="center">
-        {/* <Animated.View
-          style={{
-            width: 120,
-            height: 120,
-            borderRadius: 60,
-            borderWidth: 6,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderColor: Color.TERTIARY,
-            position: 'absolute',
-            top: 50,
-            left: 50,
-          }}>
-          <Animated.View
-            style={{
-              borderWidth: 1,
-              width: '100%',
-              transform: [{ rotate: rotating }],
-            }}
-          />
-          <View
-            style={{
-              borderWidth: 1,
-              width: '100%',
-              transform: [{ rotate: '90deg' }],
-              position: 'absolute',
-            }}
-          />
-          <View
-            style={{
-              borderWidth: 1,
-              width: '100%',
-              transform: [{ rotate: '45deg' }],
-              position: 'absolute',
-            }}
-          />
-          <View
-            style={{
-              borderWidth: 1,
-              width: '100%',
-              transform: [{ rotate: '135deg' }],
-              position: 'absolute',
-            }}
-          />
-        </Animated.View> */}
         <Text.Bold fontSize={24}>Liste des stations de Velib :</Text.Bold>
         <Spacing vertical={12} />
         <View style={{ flexDirection: 'row' }}>

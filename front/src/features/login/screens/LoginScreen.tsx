@@ -117,7 +117,7 @@ const LoginScreen = () => {
           width: 300,
           height: 300,
           position: 'absolute',
-          bottom: 80,
+          bottom: 150,
           right: animatedValue,
         }}
       />
