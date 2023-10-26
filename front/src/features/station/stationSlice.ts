@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IStationState } from './types';
 import { getStations } from './stationThunk';
 import { Status } from '../../services/axios/enum';
+import { disconnectionAction } from '../../actions/disconnection';
 
 const initialState: IStationState = {
   stations: [],
@@ -30,6 +31,9 @@ const stationSlice = createSlice({
         state.status = Status.Fulfilled;
       },
     );
+    builder.addCase(disconnectionAction, () => {
+      return initialState;
+    });
   },
 });
 

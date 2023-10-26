@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { authentication } from './userThunk';
 import { Status } from '../../services/axios/enum';
 import { IUserState } from './types';
+import { disconnectionAction } from '../../actions/disconnection';
 
 const initialState: IUserState = {
   user: { _id: '', email: '' },
@@ -22,6 +23,9 @@ const userSlice = createSlice({
     });
     builder.addCase(authentication.rejected, state => {
       state.status = Status.Rejected;
+    });
+    builder.addCase(disconnectionAction, () => {
+      return initialState;
     });
   },
 });

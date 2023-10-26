@@ -24,7 +24,7 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const { control, handleSubmit } = useForm<IFormData>({
+  const { control, handleSubmit, reset } = useForm<IFormData>({
     defaultValues: DEFAULT_FORM_VALUES,
   });
 
@@ -33,6 +33,7 @@ const LoginScreen = () => {
       .payload as IAuthenticationOutput;
     if (res.status === RequestStatus.Success) {
       navigation.navigate(Screens.Station as never);
+      reset();
     }
   };
 

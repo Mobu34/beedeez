@@ -15,27 +15,30 @@ import { setPagination } from '../stationSlice';
 import { IconEnum } from '../../../components/icon/icon.enum';
 import { Color } from '../../../enums';
 import { StationCard } from '../components';
+import useAuthentication from '../../../hooks/useAuthentication';
+import { useNavigation } from '@react-navigation/native';
 
 const StationListScreen = () => {
   const { stations, pagination } = useAppSelector(
     state => state.stationReducer,
   );
 
-  // const { _id } = useAppSelector((state) => state.userReducer);
   const [search, setSearch] = useState<string>('');
   const [bikeType, setBikeType] = useState<string>('');
 
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const dispatch = useAppDispatch();
+
+  useAuthentication();
 
   const query = { pagination: 0, search, bikeType };
 
   useEffect(() => {
-    // if (!_id) {
-    //   navigation.navigate(Screens.Login);
-    // }
-    dispatch(getStations(query));
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(getStations(query));
+    });
+    return unsubscribe;
   }, []);
 
   const onBikeTypePress = (type: string) => {

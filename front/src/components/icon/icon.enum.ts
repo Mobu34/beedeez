@@ -3,4 +3,5 @@ export enum IconEnum {
   Bicycle = 'bicycle',
   Bolt = 'bolt',
   Gear = 'gear',
+  Bars = 'bars',
 }
