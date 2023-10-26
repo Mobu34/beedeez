@@ -103,21 +103,35 @@ const StationListScreen = () => {
           keyExtractor={({ _id }) => `${widthBreapoint ? '#' : '@'}${_id}`}
           renderItem={({ item }) => <StationCard item={item} />}
           ItemSeparatorComponent={() => <Spacing vertical={4} />}
-          ListFooterComponent={() => (
+          ListFooterComponent={() => {
+            return stations.length > 0 ? (
+              <>
+                <Spacing vertical={12} />
+                <StyledViewButton>
+                  <Button
+                    onPress={() => {
+                      dispatch(
+                        getStations({ ...query, pagination: pagination + 1 }),
+                      );
+                      dispatch(setPagination(pagination + 1));
+                    }}>
+                    {fr.stationListScreen.loadMore}
+                  </Button>
+                </StyledViewButton>
+                <Spacing vertical={16} />
+              </>
+            ) : (
+              <></>
+            );
+          }}
+          ListEmptyComponent={() => (
             <>
-              <Spacing vertical={12} />
-              <StyledViewButton>
-                <Button
-                  onPress={() => {
-                    dispatch(
-                      getStations({ ...query, pagination: pagination + 1 }),
-                    );
-                    dispatch(setPagination(pagination + 1));
-                  }}>
-                  {fr.stationListScreen.loadMore}
-                </Button>
-              </StyledViewButton>
-              <Spacing vertical={16} />
+              <StyledImage
+                source={{
+                  uri: 'https://media.tenor.com/vFojGfJgDbgAAAAi/rabbit-bunny.gif',
+                }}
+              />
+              <Text.Bold>{fr.stationListScreen.noMatch}</Text.Bold>
             </>
           )}
           numColumns={widthBreapoint ? 2 : 1}
@@ -132,4 +146,9 @@ export default StationListScreen;
 const StyledViewButton = styled.View`
   flex-direction: row;
   justify-content: center;
+`;
+
+const StyledImage = styled.Image`
+  width: 200px;
+  height: 200px;
 `;

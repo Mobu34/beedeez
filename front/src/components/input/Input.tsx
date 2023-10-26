@@ -6,7 +6,13 @@ import { Color } from '../../enums';
 import { Spacing } from '../spacing';
 import { Text } from '../text';
 
-const Input: FC<IInputProps> = ({ label, placeholder, value, onChange }) => {
+const Input: FC<IInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  secureTextEntry = false,
+}) => {
   return (
     <View>
       <Text.Regular>{label}</Text.Regular>
@@ -15,6 +21,7 @@ const Input: FC<IInputProps> = ({ label, placeholder, value, onChange }) => {
         placeholder={placeholder}
         value={value}
         onChangeText={onChange}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );

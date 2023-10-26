@@ -104,13 +104,14 @@ const LoginScreen = () => {
                 onChange(text);
                 resetStatus();
               }}
+              secureTextEntry={true}
             />
           )}
         />
 
         <StyledViewError>
           {status === Status.Rejected && (
-            <Text.Regular color="red" textAlign="center">
+            <Text.Regular color={Color.Danger} textAlign="center">
               {fr.loginScreen.form.error}
             </Text.Regular>
           )}

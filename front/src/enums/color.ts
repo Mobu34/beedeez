@@ -6,6 +6,7 @@ export enum Color {
   Input = '#e8e9eb',
 
   Warning = '#f0c905',
+  Danger = '#ff0000',
 
   Grey = '#616160',
   Black = '#000000',

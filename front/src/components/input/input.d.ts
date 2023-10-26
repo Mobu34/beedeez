@@ -3,4 +3,5 @@ export interface IInputProps {
   placeholder: string;
   value: string;
   onChange: (text: string) => void;
+  secureTextEntry?: boolean;
 }
