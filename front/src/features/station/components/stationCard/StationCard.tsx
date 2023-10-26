@@ -5,6 +5,8 @@ import { Icon, Spacing, Text } from '../../../../components';
 import { IconEnum } from '../../../../components/icon/icon.enum';
 import { getPlurialSentence } from '../../utils';
 import { Color } from '../../../../enums';
+import { StyledViewRow } from '../../../../styles';
+import { fr } from '../../../../locales';
 
 const StationCard: FC<IStationCardProps> = ({ item }) => {
   const {
@@ -24,15 +26,18 @@ const StationCard: FC<IStationCardProps> = ({ item }) => {
         Station : <Text.Bold>{name}</Text.Bold>
       </Text.Regular>
       <Spacing vertical={8} />
-      <StyledViewContainer>
+      <StyledViewRow>
         <StyledViewAvailability>
           <Icon icon={IconEnum.Bicycle} size="2x" />
           <Spacing vertical={8} />
           <Text.Regular textAlign="center">
-            {getPlurialSentence(numBikesAvailable, 'vélo disponible')}
+            {getPlurialSentence(
+              numBikesAvailable,
+              fr.stationListScreen.bikeAvailable,
+            )}
           </Text.Regular>
           <Spacing vertical={4} />
-          <StyledViewContainer>
+          <StyledViewRow>
             <Text.Regular>{num_bikes_available_types[1].ebike}</Text.Regular>
             <Spacing horizontal={1} />
             <Icon icon={IconEnum.Bolt} color={Color.Warning} />
@@ -42,7 +47,7 @@ const StationCard: FC<IStationCardProps> = ({ item }) => {
             </Text.Regular>
             <Spacing horizontal={1} />
             <Icon icon={IconEnum.Gear} color={Color.Grey} />
-          </StyledViewContainer>
+          </StyledViewRow>
         </StyledViewAvailability>
         <StyledViewAvailability>
           <Icon
@@ -52,10 +57,13 @@ const StationCard: FC<IStationCardProps> = ({ item }) => {
           />
           <Spacing vertical={4} />
           <Text.Regular textAlign="center">
-            {getPlurialSentence(numDocksAvailable, 'emplacement disponible')}
+            {getPlurialSentence(
+              numDocksAvailable,
+              fr.stationListScreen.dockAvailable,
+            )}
           </Text.Regular>
         </StyledViewAvailability>
-      </StyledViewContainer>
+      </StyledViewRow>
     </StyledView>
   );
 };
@@ -70,10 +78,6 @@ const StyledView = styled.Pressable<IStyledPressable>`
   width: 400px;
   margin-horizontal: 4px;
   background-color: ${Color.White};
-`;
-
-const StyledViewContainer = styled.View`
-  flex-direction: row;
 `;
 
 const StyledViewAvailability = styled.View`

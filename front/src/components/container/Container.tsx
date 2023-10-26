@@ -9,6 +9,7 @@ import { Icon } from '../icon';
 import { Text } from '../text';
 import { Color } from '../../enums';
 import { Title } from '../title';
+import { fr } from '../../locales';
 
 const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
   const dispatch = useAppDispatch();
@@ -26,7 +27,9 @@ const Container: FC<IContainerProps> = ({ children, ...styleProps }) => {
           <StyledPressableMenu
             onPress={() => dispatch(disconnectionAction())}
             onHoverOut={() => setIsMenuOpen(false)}>
-            <Text.Regular color={Color.Secondary}>Se déconnecter</Text.Regular>
+            <Text.Regular color={Color.Secondary}>
+              {fr.common.logout}
+            </Text.Regular>
           </StyledPressableMenu>
         )}
       </StyledViewHeader>
@@ -67,8 +70,8 @@ const StyledPressableMenu = styled.Pressable`
   padding-vertical: 6px;
   padding-horizontal: 12px;
   border-radius: 5px;
-  background-color: #f2f2f2;
-  shadow-color: #0966b9;
+  background-color: ${Color.Surface};
+  shadow-color: ${Color.Secondary};
   shadow-offset: {
     width: 0;
     height: 2px;

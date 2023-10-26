@@ -19,6 +19,8 @@ import { RequestStatus, Status } from '../../../services/axios/enum';
 import { IAuthenticationOutput } from '../../user/types';
 import { resetUserStatus } from '../../user/userSlice';
 import { RabbitAnimation } from '../../../animations';
+import { StyledViewRow } from '../../../styles';
+import { fr } from '../../../locales';
 
 const DEFAULT_FORM_VALUES = { email: '', password: '' };
 
@@ -53,13 +55,13 @@ const LoginScreen = () => {
     <Wrapper alignItems="center" flex={1}>
       <Spacing vertical={50} />
       <Title />
-      <StyledView>
+      <StyledViewRow>
         <Button
           color={
             loginMode === LoginMode.SignIn ? Color.Primary : Color.Tertiary
           }
           onPress={() => setLoginMode(LoginMode.SignIn)}>
-          Connexion
+          {fr.loginScreen.signIn}
         </Button>
         <Spacing horizontal={10} />
         <Button
@@ -67,9 +69,9 @@ const LoginScreen = () => {
             loginMode === LoginMode.SignUp ? Color.Primary : Color.Tertiary
           }
           onPress={() => setLoginMode(LoginMode.SignUp)}>
-          Inscription
+          {fr.loginScreen.signUp}
         </Button>
-      </StyledView>
+      </StyledViewRow>
 
       <Wrapper marginVertical={20}>
         <Controller
@@ -78,8 +80,8 @@ const LoginScreen = () => {
           rules={{ required: true }}
           render={({ field: { value, onChange } }) => (
             <Input
-              label="Veuillez entrer votre adresse mail"
-              placeholder="Email"
+              label={fr.loginScreen.form.emailLabel}
+              placeholder={fr.loginScreen.form.emailPlaceholder}
               value={value}
               onChange={text => {
                 onChange(text);
@@ -95,8 +97,8 @@ const LoginScreen = () => {
           rules={{ required: true }}
           render={({ field: { value, onChange } }) => (
             <Input
-              label="Veuillez entrer votre mot de passe"
-              placeholder="Mot de passe"
+              label={fr.loginScreen.form.passwordLabel}
+              placeholder={fr.loginScreen.form.passwordPlaceholder}
               value={value}
               onChange={text => {
                 onChange(text);
@@ -109,13 +111,15 @@ const LoginScreen = () => {
         <StyledViewError>
           {status === Status.Rejected && (
             <Text.Regular color="red" textAlign="center">
-              Une erreur est survenue
+              {fr.loginScreen.form.error}
             </Text.Regular>
           )}
         </StyledViewError>
       </Wrapper>
       <Button onPress={handleSubmit(onSubmit)} color={Color.Secondary}>
-        {loginMode === LoginMode.SignIn ? 'Je me connecte' : "Je m'inscris"}
+        {loginMode === LoginMode.SignIn
+          ? fr.loginScreen.form.signInButton
+          : fr.loginScreen.form.signUpButton}
       </Button>
       <RabbitAnimation />
     </Wrapper>
@@ -123,10 +127,6 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-
-const StyledView = styled.View`
-  flex-direction: row;
-`;
 
 const StyledViewError = styled.View`
   height: 20px;

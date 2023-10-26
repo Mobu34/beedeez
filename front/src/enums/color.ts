@@ -10,4 +10,5 @@ export enum Color {
   Grey = '#616160',
   Black = '#000000',
   White = '#FFFFFF',
+  Surface = '#f2f2f2',
 }

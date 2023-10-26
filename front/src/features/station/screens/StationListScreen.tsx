@@ -22,6 +22,8 @@ import { StationCard } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { WheelAnimation } from '../../../animations';
 import { styled } from 'styled-components/native';
+import { StyledViewRow } from '../../../styles';
+import { fr } from '../../../locales';
 
 const StationListScreen = () => {
   const { stations, pagination } = useAppSelector(
@@ -65,9 +67,9 @@ const StationListScreen = () => {
     <Container>
       <WheelAnimation />
       <Wrapper justifyContent="center" alignItems="center">
-        <Text.Bold fontSize={24}>Liste des stations de Velib :</Text.Bold>
+        <Text.Bold fontSize={24}>{fr.stationListScreen.listTitle}</Text.Bold>
         <Spacing vertical={12} />
-        <StyledViewCheckbox>
+        <StyledViewRow>
           <Checkbox
             onPress={() => onBikeTypePress('ebike')}
             icon={IconEnum.Bolt}
@@ -81,11 +83,11 @@ const StationListScreen = () => {
             iconColor={Color.Grey}
             color={bikeType === 'mechanical' ? Color.Primary : Color.White}
           />
-        </StyledViewCheckbox>
+        </StyledViewRow>
         <Spacing vertical={12} />
         <Input
-          label="Recherchez une station"
-          placeholder="Nom de la station"
+          label={fr.stationListScreen.searchLabel}
+          placeholder={fr.stationListScreen.searchPlaceholder}
           value={search}
           onChange={text => {
             dispatch(setPagination(0));
@@ -112,7 +114,7 @@ const StationListScreen = () => {
                     );
                     dispatch(setPagination(pagination + 1));
                   }}>
-                  Charger plus...
+                  {fr.stationListScreen.loadMore}
                 </Button>
               </StyledViewButton>
               <Spacing vertical={16} />
@@ -126,10 +128,6 @@ const StationListScreen = () => {
 };
 
 export default StationListScreen;
-
-const StyledViewCheckbox = styled.View`
-  flex-direction: row;
-`;
 
 const StyledViewButton = styled.View`
   flex-direction: row;
