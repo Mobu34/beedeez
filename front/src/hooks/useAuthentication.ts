@@ -9,7 +9,9 @@ const useAuthentication = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
+      navigation.navigate(Screens.Station as never);
+    } else {
       navigation.navigate(Screens.Login as never);
     }
   }, [token]);

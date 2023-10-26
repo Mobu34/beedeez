@@ -9,13 +9,16 @@ import {
   Text,
   Wrapper,
 } from '../../../components';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAuthentication,
+} from '../../../hooks';
 import { getStations } from '../stationThunk';
 import { setPagination } from '../stationSlice';
 import { IconEnum } from '../../../components/icon/icon.enum';
 import { Color } from '../../../enums';
 import { StationCard } from '../components';
-import useAuthentication from '../../../hooks/useAuthentication';
 import { useNavigation } from '@react-navigation/native';
 
 const StationListScreen = () => {
